@@ -1,15 +1,15 @@
 # Based on https://www.metamorphosite.com/one-way-hash-encryption-sha1-data-software
 
-list console;
-proc pt txt {
-    add $txt to console;
-}
+# list console;
+# proc pt txt {
+#     add $txt to console;
+# }
 
 list chunks;
 list words;
 
 func sha1(text) {
-    delete console;
+    # delete console;
 
     local h0 = "01100111010001010010001100000001";
     local h1 = "11101111110011011010101110001001";
@@ -155,51 +155,51 @@ func sha1(text) {
     }
 
     
-    pt "pre h0: " & h0;
-    pt "add a: " & a;
+    # pt "pre h0: " & h0;
+    # pt "add a: " & a;
     
     h0 = BIN(h0);
     h0 += BIN(a);
     h0 = convert_base(h0, B10_DIGITS, B2_DIGITS);
     h0 = slice(h0, 1 + length h0 - 32, length h0);
-    pt "post h0: " & h0;
+    # pt "post h0: " & h0;
 
-    pt "pre h1: " & h1;
-    pt "add b: " & b;
+    # pt "pre h1: " & h1;
+    # pt "add b: " & b;
     
     h1 = BIN(h1);
     h1 += BIN(b);
     h1 = convert_base(h1, B10_DIGITS, B2_DIGITS);
     h1 = slice(h1, 1 + length h1 - 32, length h1);
-    pt "post h1: " & h1;
+    # pt "post h1: " & h1;
 
-    pt "pre h2: " & h2;
-    pt "add c: " & c;
+    # pt "pre h2: " & h2;
+    # pt "add c: " & c;
     
     h2 = BIN(h2);
     h2 += BIN(c);
     h2 = convert_base(h2, B10_DIGITS, B2_DIGITS);
     h2 = slice(h2, 1 + length h2 - 32, length h2);
-    pt "post h2: " & h2;
+    # pt "post h2: " & h2;
 
-    pt "pre h3: " & h3;
-    pt "add d: " & d;
+    # pt "pre h3: " & h3;
+    # pt "add d: " & d;
     
     h3 = BIN(h3);
     h3 += BIN(d);
     h3 = convert_base(h3, B10_DIGITS, B2_DIGITS);
     h3 = slice(h3, 1 + length h3 - 32, length h3);
-    pt "post h3: " & h3;
+    # pt "post h3: " & h3;
 
-    pt "pre h4: " & h4;
-    pt "add e: " & e;
+    # pt "pre h4: " & h4;
+    # pt "add e: " & e;
     
     h4 = BIN(h4);
     h4 += BIN(e);
     h4 = convert_base(h4, B10_DIGITS, B2_DIGITS);
 
     h4 = slice(h4, 1 + length h4 - 32, length h4);
-    pt "post h4: " & h4;
+    # pt "post h4: " & h4;
 
     h0 = convert_base(h0, B2_DIGITS, B16_DIGITS); 
     h1 = convert_base(h1, B2_DIGITS, B16_DIGITS); 
