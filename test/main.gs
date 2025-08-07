@@ -1,9 +1,9 @@
-%include backpack/hashlib
-
 costumes "blank.svg";
 
-onflag {
-    say sha1("A Test");
-}
+%include inflator/assert
+%include inflator/hashlib
 
-# note changes in the base converter
+onflag {main;}
+proc main {
+
+}

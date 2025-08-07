@@ -1,0 +1,7 @@
+# inflator.toml syntax documentation: https://github.com/faretek1/inflator#inflator
+name = 'test'
+username = "FAReTek1"
+
+[dependencies]
+assert = "https://github.com/FAReTek1/assert"
+hashlib = ".."

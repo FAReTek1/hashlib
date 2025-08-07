@@ -1,8 +1,1 @@
-no_miscellaneous_limits = false
-no_sprite_fencing = false
-frame_interpolation = false
-high_quality_pen = false
-
-[dependencies]
-std = "https://github.com/FAReTek1/std@v0.0.12"
-numgs = "https://github.com/FAReTek1/numgs@v0.0.0"
+# Configuration Reference: <https://aspizu.github.io/goboscript/configuration>
