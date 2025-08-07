@@ -4,3 +4,4 @@ version = "v0.0.0"
 username = "FAReTek1"
 
 [dependencies]
+char = "https://github.com/FAReTek1/char"

@@ -11,6 +11,7 @@ It is designed to be used with [inflator](https://github.com/faretek1/inflator).
 ## Credits
 
 - [TheAlgorithms](https://thealgorithms.github.io/Python/autoapi/hashes/index.html)
+    - https://github.com/TheAlgorithms/Python/tree/master/hashes
 
 ## Installation
 
