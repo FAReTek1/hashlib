@@ -17,15 +17,15 @@ func sha1(data) {  # Step 1: Pick a string
     local i = 1;
     repeat length $data {
         local char = $data[i];
-        log "Step 2: char=" & char;
+        # log "Step 2: char=" & char;
 
         # Step 3: Convert characters to ASCII codes
         local ascii_code = ord(char);
-        log "Step 3: ascii_code=" & ascii_code;
+        # log "Step 3: ascii_code=" & ascii_code;
 
         # Step 4: Convert numbers into binary
         local bin_ascii = zfill(base_conv10to(ascii_code, B2_DIGITS), 8);
-        log "Step 4: bin_ascii=" & bin_ascii;
+        # log "Step 4: bin_ascii=" & bin_ascii;
 
         assert_eq length bin_ascii, 8, "length bin_ascii != 8. Do not use sha1 with non-ASCII chars. ";
 
@@ -35,21 +35,21 @@ func sha1(data) {  # Step 1: Pick a string
         i++;
     }
 
-    log "Step 5: message=" & message;
+    # log "Step 5: message=" & message;
 
     message &= 1;
-    log "Step 5+1: message=" & message;
+    # log "Step 5+1: message=" & message;
 
     # Step 6: Append '0's' to the end
     until length message % 512 == 448{
         message &= 0;
     }
 
-    log "Step 6: message=" & message;
+    # log "Step 6: message=" & message;
 
     # Step 6.1: Append original message length (as bits!)
     message &= zfill(base_conv10to(length $data * 8, B2_DIGITS), 64);
-    log "Step 6.1: message=" & message;
+    # log "Step 6.1: message=" & message;
 
     # Step 7: 'Chunk' the message
     delete sha1_chunks;
@@ -63,7 +63,7 @@ func sha1(data) {  # Step 1: Pick a string
         }
         i++;
     }
-    log "Step 7: chunks=" & sha1_chunks;
+    # log "Step 7: chunks=" & sha1_chunks;
 
     local chunk_i = 1;
     repeat length sha1_chunks {
@@ -82,11 +82,11 @@ func sha1(data) {  # Step 1: Pick a string
             i++;
         }
 
-        log "Step 8: words=" & sha1_words;
+        # log "Step 8: words=" & sha1_words;
         # Step 9: 'Extend' into 80 words
         i = 16;
         until i == 80 {
-            log "Step 9: i=" & i;
+            # log "Step 9: i=" & i;
             # Step 9.1: XOR
             local w1 = sha1_words[i - 2];
             local w2 = sha1_words[i - 7];
@@ -101,7 +101,7 @@ func sha1(data) {  # Step 1: Pick a string
             new = bstr_lrot(new, 1);
             add new to sha1_words;
             
-            log "Step 9.2: new=" & new;
+            # log "Step 9.2: new=" & new;
             
             i++;
         }
@@ -116,11 +116,11 @@ func sha1(data) {  # Step 1: Pick a string
         repeat length sha1_words {
             word = sha1_words[i + 1];
 
-            log "Step 12: a=" & a;
-            log "Step 12: b=" & b;
-            log "Step 12: c=" & c;
-            log "Step 12: d=" & d;
-            log "Step 12: e=" & e;
+            # log "Step 12: a=" & a;
+            # log "Step 12: b=" & b;
+            # log "Step 12: c=" & c;
+            # log "Step 12: d=" & d;
+            # log "Step 12: e=" & e;
 
             local match_case = i // 20;  # TODO: when switch case is implemented, use it instead of if else
             if match_case < 2 {
@@ -146,17 +146,17 @@ func sha1(data) {  # Step 1: Pick a string
             }
 
             # Step 11.2: Put them together
-            log "Step 12t: f=" & f;
-            log "Step 12t: k=" & k;
-            log "Step 12t: word=" & word;
+            # log "Step 12t: f=" & f;
+            # log "Step 12t: k=" & k;
+            # log "Step 12t: word=" & word;
 
             local temp1 = bstr_lrot(a, 5);
-            log "Step 12t: temp=" & temp1;
+            # log "Step 12t: temp=" & temp1;
 
             temp1 = bstr_add(bstr_add(bstr_add(bstr_add(
                 temp1,
                 e), f), k), word);
-            log "Step 12t: temp=" & temp1;
+            # log "Step 12t: temp=" & temp1;
 
             # Now we need to truncate the result so that the next operations will work smoothly.
             # We will remove as much of the beginning(left) until the number is 32 bits or 'digits' long.
@@ -185,11 +185,11 @@ func sha1(data) {  # Step 1: Pick a string
         h3 = _hashlib_sha1_truncate32(bstr_add(h3, d));
         h4 = _hashlib_sha1_truncate32(bstr_add(h4, e));
         
-        log "Step 12: h0=" & h0;
-        log "Step 12: h1=" & h1;
-        log "Step 12: h2=" & h2;
-        log "Step 12: h3=" & h3;
-        log "Step 12: h4=" & h4;
+        # log "Step 12: h0=" & h0;
+        # log "Step 12: h1=" & h1;
+        # log "Step 12: h2=" & h2;
+        # log "Step 12: h3=" & h3;
+        # log "Step 12: h4=" & h4;
 
         chunk_i++;
     }
@@ -201,11 +201,11 @@ func sha1(data) {  # Step 1: Pick a string
     h3 = zfill(base_conv(h3, B2_DIGITS, B16_DIGITS), 8);
     h4 = zfill(base_conv(h4, B2_DIGITS, B16_DIGITS), 8);
 
-    log "Step 12f: h0=" & h0;
-    log "Step 12f: h1=" & h1;
-    log "Step 12f: h2=" & h2;
-    log "Step 12f: h3=" & h3;
-    log "Step 12f: h4=" & h4;
+    # log "Step 12f: h0=" & h0;
+    # log "Step 12f: h1=" & h1;
+    # log "Step 12f: h2=" & h2;
+    # log "Step 12f: h3=" & h3;
+    # log "Step 12f: h4=" & h4;
 
     return h0 & h1 & h2 & h3 & h4;
 }
