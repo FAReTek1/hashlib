@@ -2,9 +2,11 @@ costumes "blank.svg";
 
 %include inflator/assert
 %include inflator/char
-%include inflator/base
-%include inflator/string
 %include inflator/math
+%include inflator/string
+
+%include inflator/base
+%include inflator/bstr
 
 %include inflator/hashlib
 
