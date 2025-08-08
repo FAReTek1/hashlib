@@ -12,6 +12,7 @@ It is designed to be used with [inflator](https://github.com/faretek1/inflator).
 
 - [TheAlgorithms](https://thealgorithms.github.io/Python/autoapi/hashes/index.html)
     - https://github.com/TheAlgorithms/Python/tree/master/hashes
+- https://www.metamorphosite.com/one-way-hash-encryption-sha1-data-software
 
 ## Installation
 

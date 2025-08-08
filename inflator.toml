@@ -5,3 +5,6 @@ username = "FAReTek1"
 
 [dependencies]
 char = "https://github.com/FAReTek1/char"
+base = "https://github.com/FAReTek1/base"
+string = "https://github.com/FAReTek1/string"
+math = "https://github.com/FAReTek1/math"
