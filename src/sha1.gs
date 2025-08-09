@@ -162,7 +162,7 @@ func sha1(data) {  # Step 1: Pick a string
             # We will remove as much of the beginning(left) until the number is 32 bits or 'digits' long.
             local temp = "";
             local temp_i = length temp1;
-            # you could use _hashlib_sha1_truncate32 but this here is slightly more efficient
+            # you could use _hashlib_truncate32 but this here is slightly more efficient
             repeat 32 {
                 temp = temp1[temp_i] & temp;
                 temp_i--;
@@ -179,11 +179,11 @@ func sha1(data) {  # Step 1: Pick a string
             i++;
         }
         # Step 12: The end
-        h0 = _hashlib_sha1_truncate32(bstr_add(h0, a));
-        h1 = _hashlib_sha1_truncate32(bstr_add(h1, b));
-        h2 = _hashlib_sha1_truncate32(bstr_add(h2, c));
-        h3 = _hashlib_sha1_truncate32(bstr_add(h3, d));
-        h4 = _hashlib_sha1_truncate32(bstr_add(h4, e));
+        h0 = _hashlib_truncate32(bstr_add(h0, a));
+        h1 = _hashlib_truncate32(bstr_add(h1, b));
+        h2 = _hashlib_truncate32(bstr_add(h2, c));
+        h3 = _hashlib_truncate32(bstr_add(h3, d));
+        h4 = _hashlib_truncate32(bstr_add(h4, e));
         
         # log "Step 12: h0=" & h0;
         # log "Step 12: h1=" & h1;
@@ -208,14 +208,4 @@ func sha1(data) {  # Step 1: Pick a string
     # log "Step 12f: h4=" & h4;
 
     return h0 & h1 & h2 & h3 & h4;
-}
-
-func _hashlib_sha1_truncate32(v) {
-    local ret = "";
-    local i = length $v;
-    repeat 32 {
-        ret = $v[i] & ret;
-        i--;
-    }
-    return ret;
 }
