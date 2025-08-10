@@ -18,4 +18,8 @@ proc main {
     assert_eq sha1(chunk2), "eb5e36b05aa4e94c9162d4aaf50a65014df7c92b", "sha1 2chunk: ";
     assert_eq sha256(chunk1), "3445f19bb7bb8de4bdad54ec2871b1ca5a761de0115f6f741e298e4cc8f633ee", "sha256: ";
     assert_eq sha256(chunk2), "261346981802bcc516ecde9425a72b4d1b5b1f9d0dd5e50d401b9c9e813b3335", "sha256 2chunk: ";
+
+    assert_eq sha224("abc"), "23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7", "sha224 test1: ";
+    assert_eq sha224("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"), 
+              "75388b16512776cc5dba5da1fd890150b0c6455cb4f58b1952522525", "sha224 test2: ";
 }

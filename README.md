@@ -14,6 +14,9 @@ It is designed to be used with [inflator](https://github.com/faretek1/inflator).
     - https://github.com/TheAlgorithms/Python/tree/master/hashes
 - https://www.metamorphosite.com/one-way-hash-encryption-sha1-data-software
 - https://sha256algorithm.com/
+- https://github.com/thomdixon/pysha2/tree/master/sha2
+- https://www.nic.ad.jp/ja/tech/ipa/RFC3874EN.html
+
 
 ## Installation
 

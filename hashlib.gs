@@ -10,4 +10,5 @@ func _hashlib_truncate32(v) {
 }
 
 %include inflator/hashlib/src/sha1
-%include inflator/hashlib/src/sha2
+%include inflator/hashlib/src/sha256
+%include inflator/hashlib/src/sha224
