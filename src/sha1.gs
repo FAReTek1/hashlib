@@ -4,7 +4,7 @@
 list sha1_chunks;
 list sha1_words;
 
-func sha1(data) {  # Step 1: Pick a string
+func sha1(data, is_ascii=true, ret_hex=true) {  # Step 1: Pick a string
     # Step 0: Initialize some variables
     local h0 = "01100111010001010010001100000001";
     local h1 = "11101111110011011010101110001001";
@@ -13,30 +13,20 @@ func sha1(data) {  # Step 1: Pick a string
     local h4 = "11000011110100101110000111110000";
     
     # Step 2: Break it into characters
-    local message = "";
-    local i = 1;
-    repeat length $data {
-        local char = $data[i];
-        # log "Step 2: char=" & char;
-
-        # Step 3: Convert characters to ASCII codes
-        local ascii_code = ord(char);
-        # log "Step 3: ascii_code=" & ascii_code;
-
-        # Step 4: Convert numbers into binary
-        local bin_ascii = zfill(base_conv10to(ascii_code, B2_DIGITS), 8);
-        # log "Step 4: bin_ascii=" & bin_ascii;
-
-        assert_eq length bin_ascii, 8, "length bin_ascii != 8. Do not use sha1 with non-ASCII chars. ";
-
-        # Step 5: Add '1' to the end
-        message &= bin_ascii;
-
-        i++;
+    if $is_ascii {
+        local message = "";
+        local i = 1;
+        repeat length $data {
+            message &= zfill(base_conv10to(ord($data[i]), B2_DIGITS), 8);
+            i++;
+        }
+    } else {
+        local message = $data;
     }
 
     # log "Step 5: message=" & message;
-
+    local length_int = zfill(base_conv10to(length message, B2_DIGITS), 64);
+    # Step 5: Add '1' to the end
     message &= 1;
     # log "Step 5+1: message=" & message;
 
@@ -48,7 +38,7 @@ func sha1(data) {  # Step 1: Pick a string
     # log "Step 6: message=" & message;
 
     # Step 6.1: Append original message length (as bits!)
-    message &= zfill(base_conv10to(length $data * 8, B2_DIGITS), 64);
+    message &= length_int;
     # log "Step 6.1: message=" & message;
 
     # Step 7: 'Chunk' the message
@@ -195,17 +185,19 @@ func sha1(data) {  # Step 1: Pick a string
     }
 
     # Finally the variables are converted into base 16 (hex) and joined together.
-    h0 = zfill(base_conv(h0, B2_DIGITS, B16_DIGITS), 8);
-    h1 = zfill(base_conv(h1, B2_DIGITS, B16_DIGITS), 8);
-    h2 = zfill(base_conv(h2, B2_DIGITS, B16_DIGITS), 8);
-    h3 = zfill(base_conv(h3, B2_DIGITS, B16_DIGITS), 8);
-    h4 = zfill(base_conv(h4, B2_DIGITS, B16_DIGITS), 8);
+    if $ret_hex {
+        h0 = zfill(base_conv(h0, B2_DIGITS, B16_DIGITS), 8);
+        h1 = zfill(base_conv(h1, B2_DIGITS, B16_DIGITS), 8);
+        h2 = zfill(base_conv(h2, B2_DIGITS, B16_DIGITS), 8);
+        h3 = zfill(base_conv(h3, B2_DIGITS, B16_DIGITS), 8);
+        h4 = zfill(base_conv(h4, B2_DIGITS, B16_DIGITS), 8);
 
-    # log "Step 12f: h0=" & h0;
-    # log "Step 12f: h1=" & h1;
-    # log "Step 12f: h2=" & h2;
-    # log "Step 12f: h3=" & h3;
-    # log "Step 12f: h4=" & h4;
-
+        # log "Step 12f: h0=" & h0;
+        # log "Step 12f: h1=" & h1;
+        # log "Step 12f: h2=" & h2;
+        # log "Step 12f: h3=" & h3;
+        # log "Step 12f: h4=" & h4;
+    }
+    
     return h0 & h1 & h2 & h3 & h4;
 }

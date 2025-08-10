@@ -6,7 +6,8 @@ This is a hash library which is built for [goboscript](https://github.com/aspizu
 It is designed to be used with [inflator](https://github.com/faretek1/inflator).
 
 > [!NOTE]
-> This library is WIP
+> This library is not designed to be particularly fast, as it does operations using bstrings. 
+> In the future, this can hopefully be optimised
 
 ## Credits
 

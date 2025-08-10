@@ -70,19 +70,24 @@ list sha224_k = [
     "10111110111110011010001111110111",
     "11000110011100010111100011110010"];
 
-func sha224(data) {
+func sha224(data, is_ascii=true, ret_hex=true) {
     # 1. Encode the input to binary using UTF-8 and append a single '1' to it.
     # 2. Prepend that binary to the message block.
-    local message = "";
-    local i = 1;
-    repeat length $data {
-        message &= zfill(base_conv10to(ord($data[i]), B2_DIGITS), 8);
-        i++;
+    if $is_ascii {
+        local message = "";
+        local i = 1;
+        repeat length $data {
+            message &= zfill(base_conv10to(ord($data[i]), B2_DIGITS), 8);
+            i++;
+        }
+    } else {
+        local message = $data;
     }
-    message &= 1;
 
     # 3. Append the original message length (110000, 48 in decimal) at the end of the message block as a 64-bit big-endian integer.
-    local length_int = zfill(base_conv10to(length $data * 8, B2_DIGITS), 64);
+    local length_int = zfill(base_conv10to(length message, B2_DIGITS), 64);
+    message &= 1;
+
     # 4. Add 399 zeros between the encoded message and the length integer so that the message block is a multiple of 512. In this case 48 + 1 + 399 + 64 = 512
     until (length message + 64) % 512 == 0 {
         message &= 0;
@@ -236,15 +241,16 @@ func sha224(data) {
     h5 = _hashlib_truncate32(h5);
     h6 = _hashlib_truncate32(h6);
     # h7 = _hashlib_truncate32(h7);
-    
-    h0 = zfill(base_conv(h0, B2_DIGITS, B16_DIGITS), 8);
-    h1 = zfill(base_conv(h1, B2_DIGITS, B16_DIGITS), 8);
-    h2 = zfill(base_conv(h2, B2_DIGITS, B16_DIGITS), 8);
-    h3 = zfill(base_conv(h3, B2_DIGITS, B16_DIGITS), 8);
-    h4 = zfill(base_conv(h4, B2_DIGITS, B16_DIGITS), 8);
-    h5 = zfill(base_conv(h5, B2_DIGITS, B16_DIGITS), 8);
-    h6 = zfill(base_conv(h6, B2_DIGITS, B16_DIGITS), 8);
-    # h7 = zfill(base_conv(h7, B2_DIGITS, B16_DIGITS), 8);
+    if $ret_hex {
+        h0 = zfill(base_conv(h0, B2_DIGITS, B16_DIGITS), 8);
+        h1 = zfill(base_conv(h1, B2_DIGITS, B16_DIGITS), 8);
+        h2 = zfill(base_conv(h2, B2_DIGITS, B16_DIGITS), 8);
+        h3 = zfill(base_conv(h3, B2_DIGITS, B16_DIGITS), 8);
+        h4 = zfill(base_conv(h4, B2_DIGITS, B16_DIGITS), 8);
+        h5 = zfill(base_conv(h5, B2_DIGITS, B16_DIGITS), 8);
+        h6 = zfill(base_conv(h6, B2_DIGITS, B16_DIGITS), 8);
+        # h7 = zfill(base_conv(h7, B2_DIGITS, B16_DIGITS), 8);
+    }
     
     return h0 & h1 & h2 & h3 & h4 & h5 & h6;
 }

@@ -124,7 +124,7 @@ func sha256(data, is_ascii=true, ret_hex=true) {
     local chunk_i = 1;
     repeat length sha256_chunks {
         local chunk = sha256_chunks[chunk_i];
-        
+
         # 3. Copy 1st chunk into 1st 16 words w[0..15] of the message schedule array.
         delete sha256_words;
         i = 1;
@@ -243,6 +243,7 @@ func sha256(data, is_ascii=true, ret_hex=true) {
     h5 = _hashlib_truncate32(h5);
     h6 = _hashlib_truncate32(h6);
     h7 = _hashlib_truncate32(h7);
+    
     if $ret_hex {
         h0 = zfill(base_conv(h0, B2_DIGITS, B16_DIGITS), 8);
         h1 = zfill(base_conv(h1, B2_DIGITS, B16_DIGITS), 8);
@@ -252,13 +253,12 @@ func sha256(data, is_ascii=true, ret_hex=true) {
         h5 = zfill(base_conv(h5, B2_DIGITS, B16_DIGITS), 8);
         h6 = zfill(base_conv(h6, B2_DIGITS, B16_DIGITS), 8);
         h7 = zfill(base_conv(h7, B2_DIGITS, B16_DIGITS), 8);
-
-        return h0 & h1 & h2 & h3 & h4 & h5 & h6 & h7;
-    } else {
-        return h0 & h1 & h2 & h3 & h4 & h5 & h6 & h7;
     }
+
+    return h0 & h1 & h2 & h3 & h4 & h5 & h6 & h7;
+
 }
 
-func double_sha256(data) {
-    return sha256(sha256($data, ret_hex: false), is_ascii: false);
+func double_sha256(data, is_ascii=true, ret_hex=true) {
+    return sha256(sha256($data, is_ascii: $is_ascii, ret_hex: false), is_ascii: false, ret_hex: $ret_hex);
 }
